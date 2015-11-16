@@ -1,0 +1,6 @@
+- pre-command : "proxychains4 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$host"
+- user : hutama
+- name : "Q95-rsyslog"
+  description : "server rsyslog conf"
+  command : "cat /etc/rsyslog.d/49-remote.conf"
+  host : [ bastion1 ]
