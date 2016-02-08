@@ -1,6 +1,8 @@
 - pre-command : "proxychains4 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$host"
-- user : hutama
-- name : "Q95-rsyslog"
-  description : "server rsyslog conf"
-  command : "cat /etc/rsyslog.d/49-remote.conf"
-  host : [ bastion1 ]
+- user : vinhut
+- name : "test-screenshot"
+  description : "tail messages.log"
+  isPython : True
+  var : "server = [ 'server01', 'serer02' ]; name = server"
+  command : "for i in server: cmd = 'tail /home/'+i+'/messages.log';l.append(cmd)"
+  host : [ logserver01 ]
