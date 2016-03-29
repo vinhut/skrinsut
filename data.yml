@@ -3,6 +3,6 @@
 - name : "test-screenshot"
   description : "tail messages.log"
   isPython : True
-  var : "server = [ 'server01', 'serer02' ]; name = server"
+  var : "server = [ 'server01', 'server02' ]; name = server"
   command : "for i in server: cmd = 'tail /home/'+i+'/messages.log';l.append(cmd)"
   host : [ logserver01 ]
