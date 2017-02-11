@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import vte,gtk,re,time
 from thread import start_new_thread
@@ -7,6 +7,7 @@ import threading
 import yaml
 from string import Template
 import os
+import pdb
 
 class TerminalScrap(threading.Thread):
 	cont = False
@@ -45,7 +46,7 @@ class TerminalScrap(threading.Thread):
 		gtk.threads_enter()
 		self.term.feed_child("reset\n")
 		gtk.threads_leave()
-		time.sleep(2)
+		time.sleep(5)
 		self.cont = False
 
 	def run_command_and_wait(self,command):
@@ -56,7 +57,7 @@ class TerminalScrap(threading.Thread):
 		self.term.feed_child(command+"\n")
 		gtk.threads_leave()
 		while (not self.cont):
-			time.sleep(5)
+			time.sleep(10)
 			continue
 		self.cont = False
 		print "leave run_command_and_wait"
@@ -69,7 +70,7 @@ class TerminalScrap(threading.Thread):
 		self.term.feed_child(command+"\n")
 		gtk.threads_leave()
 		while (not self.cont):
-			time.sleep(1)
+			time.sleep(10)
 			continue
 		self.cont = False
 		gtk.threads_enter()
@@ -147,6 +148,7 @@ if __name__ == "__main__":
 			continue
 		for host in i['host']:
 			l = []
+			#pdb.set_trace()
 			d = dict(host=host,user=user,name=i['name'])
 			filename = Template("$name-$host.png").safe_substitute(d)
 			if 'name' in globals():
@@ -159,8 +161,8 @@ if __name__ == "__main__":
 			if 'isPython' in i and i['isPython']:
 				command = Template(i['command']).safe_substitute(d)
 				exec(command)
-				for i in l:
-					snap_thread.append_queue([i,True])
+				for n in l:
+					snap_thread.append_queue([n,True])
 			else:
 				command = Template(i['command']).safe_substitute(d)
 				snap_thread.append_queue([command,True])
